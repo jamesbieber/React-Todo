@@ -1,38 +1,86 @@
 import React from 'react';
+import "./components/TodoComponents/Todo.css";
 import TodoList from './components/TodoComponents/TodoList';
 import TodoForm from './components/TodoComponents/TodoForm';
 
-const toDos = 
-[
-  {
-    task: 'Organize Garage',
-    id: Date.now(),
-    completed: false
-  },
-  {
-    task: 'Bake Cookies',
-    id: Date.now(),
-    completed: false
-  }
-
-];
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      task: 'Organize Garage',
-      id: Date.now(),
-      completed: false
+      todos: 
+      [
+        {
+          task: 'Organize Garage',
+          id: Date.now(),
+          completed: false
+        },
+        {
+          task: 'Bake Cookies',
+          id: Date.now(),
+          completed: true
+        }
+      ],
+
+      todo: ''
     };
   }
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
+
+    inputChangeHandler = event => {
+      this.setState({ [event.target.name]: event.target.value});
+    }
+
+    formAddTask = event => {
+      event.preventDefault();
+      let newTask = {
+          task: this.state.todo,
+          id: Date.now(),
+          completed: false
+      };
+      this.setState(prevState => {
+        return {
+          todos: [...prevState.todos, newTask],
+          todo: ''
+        };
+      });
+    }
+
+    formItemComplete = (event, index) => {
+      console.log("Hello");
+      this.setState({
+        todos: this.state.todos.map(todo => {
+          if(this.todo.index === index) {
+            completed: !todo.completed
+            return todo;
+          }
+        })
+      })
+    }
+
+    formRemoveItems = event => {
+      event.preventDefault();
+      this.setState({
+        todos: this.state.todos.filter(todo => todo.completed === false)
+      })
+    }
+
+  
+
   render() {
     return (
       <div>
-        <TodoList />
+        <TodoList 
+        formItemComplete={this.formItemComplete} 
+        todos={this.state.todos} 
+        />
+
+        <TodoForm 
+        value={this.state.todo} 
+        inputChangeHandler={this.inputChangeHandler} 
+        formAddTask={this.formAddTask}
+        formRemoveItems={this.formRemoveItems}
+        />
+
       </div>
     );
   }
