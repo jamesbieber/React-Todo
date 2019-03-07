@@ -15,11 +15,6 @@ class App extends React.Component {
           id: Date.now(),
           completed: false
         },
-        {
-          task: 'Bake Cookies',
-          id: Date.now(),
-          completed: true
-        }
       ],
 
       todo: ''
@@ -45,16 +40,17 @@ class App extends React.Component {
       });
     }
 
-    formItemComplete = (event, index) => {
-      console.log("Hello");
-      this.setState({
-        todos: this.state.todos.map(todo => {
-          if(this.todo.index === index) {
-            completed: !todo.completed
+    formItemComplete = id => {
+      let todos = this.state.todos
+      todos.map(todo => {
+        if(todo.id === id) {
+            todo.completed = !todo.completed
             return todo;
-          }
-        })
+        } else {
+          return todo;
+        }
       })
+      this.setState({todos})
     }
 
     formRemoveItems = event => {

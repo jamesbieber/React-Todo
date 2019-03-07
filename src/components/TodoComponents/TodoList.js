@@ -3,12 +3,15 @@
 import React from 'react';
 import Todo from './Todo';
 
-const TodoList = (props) => (
-	<div>
-		{props.todos.map((todo, index) => (
-			<Todo todo={todo} key={index} />
-		))}
-	</div>
-)
+const TodoList = (props) => {
+	console.log(props);
+	return (
+		<div>
+			{props.todos.map((todo, index) => (
+				<Todo formItemComplete={props.formItemComplete} todo={todo} key={index} />
+			))}
+		</div>
+	)
+}
 
 export default TodoList;
